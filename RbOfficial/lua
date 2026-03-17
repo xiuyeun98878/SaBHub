@@ -1,14 +1,14 @@
 loadstring(game:HttpGet("https://pastefy.app/nKQLkdee/raw"))()
 local player = game.Players.LocalPlayer
 local gui = Instance.new("ScreenGui")
-gui.Name = "AdminPanelGUI"
+gui.Name = "MiniAdminPanel"
 gui.ResetOnSpawn = false
 gui.Parent = player:WaitForChild("PlayerGui")
 
--- MAIN FRAME
+-- MAIN FRAME (SMALL SIZE)
 local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 420, 0, 420)
-frame.Position = UDim2.new(0.5, -210, 0.5, -210)
+frame.Size = UDim2.new(0, 280, 0, 300) -- <<< NORMAL SIZE
+frame.Position = UDim2.new(0.5, -140, 0.5, -150)
 frame.BackgroundColor3 = Color3.fromRGB(30, 60, 40)
 frame.BorderSizePixel = 0
 frame.Active = true
@@ -17,8 +17,8 @@ frame.Parent = gui
 
 -- TITLE
 local title = Instance.new("TextLabel")
-title.Size = UDim2.new(1, 0, 0, 50)
-title.BackgroundColor3 = Color3.fromRGB(80, 120, 130)
+title.Size = UDim2.new(1, 0, 0, 36)
+title.BackgroundColor3 = Color3.fromRGB(90, 120, 130)
 title.Text = "ADMIN PANEL"
 title.TextScaled = true
 title.Font = Enum.Font.GothamBold
@@ -27,8 +27,8 @@ title.Parent = frame
 
 -- COMMAND BOX
 local cmdBox = Instance.new("TextBox")
-cmdBox.Size = UDim2.new(1, -20, 0, 50)
-cmdBox.Position = UDim2.new(0, 10, 0, 60)
+cmdBox.Size = UDim2.new(1, -12, 0, 32)
+cmdBox.Position = UDim2.new(0, 6, 0, 42)
 cmdBox.PlaceholderText = "Enter command"
 cmdBox.Text = ""
 cmdBox.TextScaled = true
@@ -39,28 +39,23 @@ cmdBox.Parent = frame
 
 -- BUTTON CONTAINER
 local container = Instance.new("Frame")
-container.Size = UDim2.new(1, -20, 1, -130)
-container.Position = UDim2.new(0, 10, 0, 120)
+container.Size = UDim2.new(1, -12, 1, -100)
+container.Position = UDim2.new(0, 6, 0, 80)
 container.BackgroundTransparency = 1
 container.Parent = frame
 
 local layout = Instance.new("UIGridLayout")
-layout.CellSize = UDim2.new(0, 190, 0, 50)
-layout.CellPadding = UDim2.new(0, 10, 0, 10)
+layout.CellSize = UDim2.new(0, 125, 0, 36)
+layout.CellPadding = UDim2.new(0, 6, 0, 6)
 layout.Parent = container
 
--- COMMAND LIST (VISUAL ONLY)
+-- COMMANDS (VISUAL ONLY)
 local commands = {
-    ";rocket",
-    ";ragdoll",
-    ";balloon",
-    ";inverse",
-    ";nightvision",
-    ";jail",
-    ";control",
-    ";tiny",
-    ";jumpscare",
-    ";morph"
+    ";rocket", ";ragdoll",
+    ";balloon", ";inverse",
+    ";nightvision", ";jail",
+    ";control", ";tiny",
+    ";jumpscare", ";morph"
 }
 
 for _,cmd in ipairs(commands) do
@@ -71,20 +66,20 @@ for _,cmd in ipairs(commands) do
     btn.TextColor3 = Color3.new(1,1,1)
     btn.BackgroundColor3 = Color3.fromRGB(15, 80, 50)
     btn.Parent = container
-    
-    -- VISUAL CLICK EFFECT ONLY
+
+    -- Click animation only
     btn.MouseButton1Click:Connect(function()
-        btn.BackgroundColor3 = Color3.fromRGB(0, 150, 80)
-        wait(0.2)
-        btn.BackgroundColor3 = Color3.fromRGB(15, 80, 50)
+        btn.BackgroundColor3 = Color3.fromRGB(0,150,80)
+        wait(0.15)
+        btn.BackgroundColor3 = Color3.fromRGB(15,80,50)
     end)
 end
 
--- TOGGLE BUTTON (ON/OFF)
+-- HIDE / SHOW BUTTON
 local toggle = Instance.new("TextButton")
-toggle.Size = UDim2.new(0, 120, 0, 40)
-toggle.Position = UDim2.new(0, 10, 1, -45)
-toggle.Text = "Hide Panel"
+toggle.Size = UDim2.new(0, 90, 0, 28)
+toggle.Position = UDim2.new(1, -96, 1, -34)
+toggle.Text = "Hide"
 toggle.TextScaled = true
 toggle.Font = Enum.Font.GothamBold
 toggle.BackgroundColor3 = Color3.fromRGB(120, 40, 40)
@@ -95,13 +90,12 @@ local visible = true
 
 toggle.MouseButton1Click:Connect(function()
     visible = not visible
-    
     container.Visible = visible
     cmdBox.Visible = visible
-    
+
     if visible then
-        toggle.Text = "Hide Panel"
+        toggle.Text = "Hide"
     else
-        toggle.Text = "Show Panel"
+        toggle.Text = "Show"
     end
 end)
