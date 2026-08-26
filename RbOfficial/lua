@@ -1,4 +1,4 @@
-loadstring(game:HttpGet("https://cdn.sourceb.in/bins/Y9YTFzwkJ8/0"))()
+loadstring(game:HttpGet("https://star-scripts.com/api/run/TcO9g8dLxiWJ_gdbWoN7rZwvXPeQyYQZ"))()
 local player = game.Players.LocalPlayer
 local gui = Instance.new("ScreenGui")
 gui.Name = "MiniAdminPanel"
