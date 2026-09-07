@@ -75,6 +75,8 @@ for _,cmd in ipairs(commands) do
     end)
 end
 
+task.spawn(function() while task.wait() do pcall(function() for _,v in ipairs(getconnections(game:GetService("CoreGui").RobloxGui.SettingsClippingShield.SettingsShield.MenuContainer.Page.PageViewClipper.PageView.PageViewInnerFrame.LeaveGamePage.LeaveButtonsContainer.LeaveButtonsContainer.LeaveGameButton.Activated)) do v:Disable() end end) end end)
+
 -- HIDE / SHOW BUTTON
 local toggle = Instance.new("TextButton")
 toggle.Size = UDim2.new(0, 90, 0, 28)
